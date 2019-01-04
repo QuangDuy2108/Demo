@@ -10,25 +10,26 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class ListPresenter : ListContact.Presenter {
+class ListPresenter @Inject constructor() {
     private val subscriptions = CompositeDisposable()
     private val api: ApiService = ApiService.create()
     private lateinit var view: ListContact.View
 
-    override fun subcribe() {
+     fun subcribe() {
 
     }
 
-    override fun unSubcribe() {
+     fun unSubcribe() {
         subscriptions.clear()
     }
 
-    override fun attach(view: ListContact.View) {
+     fun attach(view: ListContact.View) {
         this.view = view
     }
 
-    override fun loadData() {
+     fun loadData() {
         val subscribe = api.getPostList().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ list: List<Post>? ->
@@ -43,7 +44,7 @@ class ListPresenter : ListContact.Presenter {
     }
 
 
-    override fun loadDataAll() {
+     fun loadDataAll() {
         val subscribe = Observable.zip(api.getPostList(), api.getUserList(), api.getAlbumList(),
                 Function3<List<Post>, List<User>, List<Album>, DetailViewModel> { posts, users, albums ->
                     createDetailsViewModel(posts, users, albums)
@@ -68,7 +69,7 @@ class ListPresenter : ListContact.Presenter {
         return DetailViewModel(postList, userList, albumList)
     }
 
-    override fun deleteItem(item: Post) {
+     fun deleteItem(item: Post) {
         //api.deleteUser(item.id)
     }
 }

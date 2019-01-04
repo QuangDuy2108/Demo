@@ -13,9 +13,4 @@ class ListContact {
         fun loadDataAllSuccess(model: DetailViewModel)
     }
 
-    interface Presenter: BaseContact.Presenter<View> {
-        fun loadData()
-        fun loadDataAll()
-        fun deleteItem(item: Post)
-    }
 }

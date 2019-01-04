@@ -4,11 +4,8 @@ import com.ominext.demo_1.ui.base.BaseContact
 
 class MainContact {
 
-    interface View : BaseContact.View{
+    interface View : BaseContact.View {
         fun showFragment()
     }
 
-    interface Presenter : BaseContact.Presenter<MainContact.View>{
-
-    }
 }

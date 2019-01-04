@@ -1,21 +1,22 @@
 package com.ominext.demo_1.ui.main
 
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
-class MainPresenter: MainContact.Presenter {
+class MainPresenter @Inject constructor() {
 
     private val subcription = CompositeDisposable()
-    private lateinit var view : MainContact.View
+    private lateinit var view: MainContact.View
 
-    override fun subcribe() {
+    fun subcribe() {
 
     }
 
-    override fun unSubcribe() {
+    fun unSubcribe() {
         subcription.clear()
     }
 
-    override fun attach(view: MainContact.View) {
+    fun attach(view: MainContact.View) {
         this.view = view
         view.showFragment()
     }

@@ -12,7 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.ominext.demo_1.R
-import com.ominext.demo_1.di.component.DaggerFragmentComponent
+import com.ominext.demo_1.di.component.DaggerAppComponent
 import com.ominext.demo_1.di.module.FragmentModule
 import com.ominext.demo_1.model.DetailViewModel
 import com.ominext.demo_1.model.Post
@@ -27,24 +27,18 @@ import javax.inject.Inject
 class ListFragment : Fragment(), ListContact.View, ListAdapter.onItemClickListener {
 
     @Inject
-    lateinit var presenter: ListContact.Presenter
+    lateinit var presenter: ListPresenter
 
     private lateinit var rootView: View
-
-    fun newInstance(): ListFragment {
-        return ListFragment()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injectDependency()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_list, container, false)
-        return rootView
+        return inflater.inflateView(R.layout.fragment_list, container)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -52,6 +46,10 @@ class ListFragment : Fragment(), ListContact.View, ListAdapter.onItemClickListen
         presenter.attach(this)
         presenter.subcribe()
         initView()
+    }
+
+    fun LayoutInflater.inflateView(resId: Int, container: ViewGroup?): View {
+        return this.inflate(resId, container, false)
     }
 
     override fun onDestroyView() {
@@ -73,8 +71,10 @@ class ListFragment : Fragment(), ListContact.View, ListAdapter.onItemClickListen
 
     override fun loadDataSuccess(list: List<Post>) {
         val adapter = ListAdapter(activity, list.toMutableList(), this)
-        recyclerView!!.layoutManager = LinearLayoutManager(activity)
-        recyclerView!!.adapter = adapter
+        recyclerView?.apply {
+            layoutManager = LinearLayoutManager(activity)
+            this.adapter = adapter
+        }
 
         val swipeHandler = object : SwipeToDelete(activity) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -98,9 +98,9 @@ class ListFragment : Fragment(), ListContact.View, ListAdapter.onItemClickListen
     }
 
     private fun injectDependency() {
-        val listComponent = DaggerFragmentComponent.builder()
-                .fragmentModule(FragmentModule())
-                .build()
+        val listComponent = DaggerAppComponent.builder()
+            .fragmentModule(FragmentModule())
+            .build()
 
         listComponent.inject(this)
     }
