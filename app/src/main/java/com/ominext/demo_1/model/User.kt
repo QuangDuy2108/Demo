@@ -1,6 +1,6 @@
 package com.ominext.demo_1.model
 
-class User(val id: Int, val name: String, val username: String)
+class User(val id: Int, val name: String, val username: String, val email:String)
 
 /*
     "id": 1,

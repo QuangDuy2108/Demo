@@ -1,10 +1,12 @@
 package com.ominext.demo_1.ui.list
 
+import android.view.View
 import com.ominext.demo_1.api.ApiService
 import com.ominext.demo_1.model.Album
 import com.ominext.demo_1.model.DetailViewModel
 import com.ominext.demo_1.model.Post
 import com.ominext.demo_1.model.User
+import com.ominext.demo_1.ui.base.BaseContact
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -12,20 +14,20 @@ import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class ListPresenter @Inject constructor() {
+class ListPresenter @Inject constructor(): BaseContact.Presenter {
     private val subscriptions = CompositeDisposable()
     private val api: ApiService = ApiService.create()
     private lateinit var view: ListContact.View
 
-     fun subcribe() {
+    override fun subcribe() {
 
     }
 
-     fun unSubcribe() {
+     override fun unSubcribe() {
         subscriptions.clear()
     }
 
-     fun attach(view: ListContact.View) {
+    fun attach(view: ListContact.View) {
         this.view = view
     }
 

@@ -23,7 +23,7 @@ class BaseApplication : Application() {
     }
 
     fun getAppComponent(): AppComponent = component
-
+    
     companion object {
         lateinit var instance: BaseApplication private set
     }

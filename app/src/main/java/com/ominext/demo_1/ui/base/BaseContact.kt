@@ -2,10 +2,9 @@ package com.ominext.demo_1.ui.base
 
 class BaseContact {
 
-    interface Presenter<in T>{
+    interface Presenter{
         fun subcribe()
         fun unSubcribe()
-        fun attach(view: T)
     }
 
     interface View{

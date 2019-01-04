@@ -16,23 +16,16 @@ class MainActivity : AppCompatActivity(), MainContact.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        injectDependency()
-
+        DaggerAppComponent.builder().activityModule(ActivityModule(this)).build().inject(this)
         presenter.attach(this)
     }
 
 
     override fun showFragment() {
+        val listFragment = ListFragment()
         supportFragmentManager.beginTransaction()
             .disallowAddToBackStack()
-            .replace(R.id.frame, ListFragment(), ListFragment.TAG)
+            .replace(R.id.frame, listFragment, ListFragment.TAG)
             .commit()
-    }
-
-
-
-    private fun injectDependency() {
-        val activityComponent = DaggerAppComponent.builder().activityModule(ActivityModule(this)).build()
-        activityComponent.inject(this)
     }
 }

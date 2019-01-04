@@ -4,8 +4,6 @@ package com.ominext.demo_1.ui.list
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +14,8 @@ import com.ominext.demo_1.di.component.DaggerAppComponent
 import com.ominext.demo_1.di.module.FragmentModule
 import com.ominext.demo_1.model.DetailViewModel
 import com.ominext.demo_1.model.Post
-import com.ominext.demo_1.util.SwipeToDelete
+import com.ominext.demo_1.ui.detail.DetailFragment
+import com.ominext.demo_1.ui.list.adapter.ListAdapter
 import kotlinx.android.synthetic.main.fragment_list.*
 import javax.inject.Inject
 
@@ -33,7 +32,7 @@ class ListFragment : Fragment(), ListContact.View, ListAdapter.onItemClickListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injectDependency()
+        DaggerAppComponent.builder().fragmentModule(FragmentModule()).build().inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -71,20 +70,11 @@ class ListFragment : Fragment(), ListContact.View, ListAdapter.onItemClickListen
 
     override fun loadDataSuccess(list: List<Post>) {
         val adapter = ListAdapter(activity, list.toMutableList(), this)
-        recyclerView?.apply {
-            layoutManager = LinearLayoutManager(activity)
-            this.adapter = adapter
+        recyclerView?.let {
+            it.layoutManager = LinearLayoutManager(activity)
+            it.adapter = adapter
         }
-
-        val swipeHandler = object : SwipeToDelete(activity) {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val adapter = recyclerView.adapter as ListAdapter
-                adapter.removeAt(viewHolder.adapterPosition)
-            }
-        }
-
-        val itemTouchHelper = ItemTouchHelper(swipeHandler)
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+        adapter.notifyDataSetChanged()
     }
 
     override fun loadDataAllSuccess(model: DetailViewModel) {
@@ -95,15 +85,13 @@ class ListFragment : Fragment(), ListContact.View, ListAdapter.onItemClickListen
     }
 
     override fun itemDetail(postId: String) {
+        val detailFragment = DetailFragment()
+        fragmentManager.beginTransaction()
+                .addToBackStack(TAG)
+                .add(R.id.frame, detailFragment, "")
+                .commit()
     }
 
-    private fun injectDependency() {
-        val listComponent = DaggerAppComponent.builder()
-            .fragmentModule(FragmentModule())
-            .build()
-
-        listComponent.inject(this)
-    }
 
     private fun initView() {
         presenter.loadData()
