@@ -8,15 +8,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.ominext.demo_1.R
 import com.ominext.demo_1.di.component.DaggerAppComponent
-import com.ominext.demo_1.di.module.FragmentModule
 import com.ominext.demo_1.model.DetailViewModel
 import com.ominext.demo_1.model.Post
 import com.ominext.demo_1.ui.detail.DetailFragment
 import com.ominext.demo_1.ui.list.adapter.ListAdapter
+import com.ominext.demo_1.util.event.MessageEvent
 import kotlinx.android.synthetic.main.fragment_list.*
+import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 /**
@@ -32,7 +32,7 @@ class ListFragment : Fragment(), ListContact.View, ListAdapter.onItemClickListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerAppComponent.builder().fragmentModule(FragmentModule()).build().inject(this)
+        DaggerAppComponent.builder().build().inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -85,6 +85,7 @@ class ListFragment : Fragment(), ListContact.View, ListAdapter.onItemClickListen
     }
 
     override fun itemDetail(postId: String) {
+        EventBus.getDefault().postSticky(MessageEvent("List User"))
         val detailFragment = DetailFragment()
         fragmentManager.beginTransaction()
                 .addToBackStack(TAG)

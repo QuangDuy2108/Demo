@@ -1,6 +1,7 @@
 package com.ominext.demo_1.ui.detail
 
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -9,16 +10,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-
 import com.ominext.demo_1.R
 import com.ominext.demo_1.di.component.DaggerAppComponent
-import com.ominext.demo_1.di.module.DetailModule
-import com.ominext.demo_1.di.module.FragmentModule
 import com.ominext.demo_1.model.User
 import com.ominext.demo_1.ui.detail.adapter.DetailAdapter
+import com.ominext.demo_1.util.event.MessageEvent
 import kotlinx.android.synthetic.main.fragment_detail.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import javax.inject.Inject
-import kotlin.math.log
 
 
 /**
@@ -33,7 +34,7 @@ class DetailFragment : Fragment(), DetailContact.View, DetailAdapter.OnItemClick
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerAppComponent.builder().detailModule(DetailModule()).build().inject(this)
+        DaggerAppComponent.builder().build().inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -87,4 +88,27 @@ class DetailFragment : Fragment(), DetailContact.View, DetailAdapter.OnItemClick
         val TAG: String = "DetailFragment"
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public fun onMessageEvent(messageEvent: MessageEvent) {
+        val stickEvent = EventBus.getDefault().getStickyEvent(MessageEvent::class.java)
+        if (stickEvent != null) {
+            Toast.makeText(context, stickEvent.mess, Toast.LENGTH_LONG).show()
+            EventBus.getDefault().removeStickyEvent(stickEvent)
+        }
+    }
+
+    override fun onDestroy() {
+
+        super.onDestroy()
+    }
 }

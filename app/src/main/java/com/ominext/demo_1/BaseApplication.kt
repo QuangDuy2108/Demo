@@ -1,18 +1,20 @@
 package com.ominext.demo_1
 
+import android.annotation.SuppressLint
 import android.app.Application
 import com.ominext.demo_1.di.component.AppComponent
 import com.ominext.demo_1.di.component.DaggerAppComponent
 import com.ominext.demo_1.di.module.AppModule
 
+@SuppressLint("Registered")
 class BaseApplication : Application() {
-    private lateinit var component: AppComponent
+    lateinit var component: AppComponent
 
     override fun onCreate() {
         super.onCreate()
         instance = this
         setup()
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
 
         }
     }
@@ -22,8 +24,10 @@ class BaseApplication : Application() {
         component.inject(this)
     }
 
+    private fun initRealm(){}
+
     fun getAppComponent(): AppComponent = component
-    
+
     companion object {
         lateinit var instance: BaseApplication private set
     }
