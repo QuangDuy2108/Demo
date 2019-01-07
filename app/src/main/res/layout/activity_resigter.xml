@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="32dp"
-    tools:context=".ui.login.LoginActivity">
+    tools:context=".ui.resigter.ResigterActivity">
 
     <EditText
         android:id="@+id/edtEmail"
@@ -39,22 +40,22 @@
         card_view:cardCornerRadius="8dp">
 
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnResigter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="Login"
+            android:text="Resigter"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             tools:ignore="KeyboardInaccessibleWidget" />
     </android.support.v7.widget.CardView>
 
     <TextView
-        android:id="@+id/btnGoToResigter"
+        android:id="@+id/btnGoToLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:text="Resigter"
-        android:textColor="@color/colorPrimary"/>
+        android:text="Back to Login"
+        android:textColor="@color/colorPrimary" />
 </RelativeLayout>

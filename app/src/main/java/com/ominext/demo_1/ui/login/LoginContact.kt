@@ -6,5 +6,6 @@ class LoginContact {
 
     interface View:BaseContact.View{
         fun onLoginClick()
+        fun onGoToResigerClick()
     }
 }

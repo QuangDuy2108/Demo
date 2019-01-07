@@ -2,6 +2,7 @@ package com.ominext.demo_1
 
 import android.annotation.SuppressLint
 import android.app.Application
+import com.google.firebase.FirebaseApp
 import com.ominext.demo_1.di.component.AppComponent
 import com.ominext.demo_1.di.component.DaggerAppComponent
 import com.ominext.demo_1.di.module.AppModule
@@ -17,6 +18,7 @@ class BaseApplication : Application() {
         if (BuildConfig.DEBUG) {
 
         }
+        FirebaseApp.initializeApp(this)
     }
 
     private fun setup() {
@@ -24,7 +26,9 @@ class BaseApplication : Application() {
         component.inject(this)
     }
 
-    private fun initRealm(){}
+    private fun initRealm(){
+
+    }
 
     fun getAppComponent(): AppComponent = component
 
