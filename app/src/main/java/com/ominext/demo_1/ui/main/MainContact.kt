@@ -6,6 +6,8 @@ class MainContact {
 
     interface View : BaseContact.View {
         fun showFragment()
+        fun goToListMember()
+        fun goToChat()
     }
 
 }

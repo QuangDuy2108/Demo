@@ -1,9 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.listfirebase.ListfirebaseActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/edtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:hint="name"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/edtAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtName"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:hint="adresss"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtAddress"
+        android:layout_centerHorizontal="true"
+        android:text="Submit"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtAddress"
+        android:text="Add"
+        android:textAllCaps="false" />
+
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtAddress"
+        android:layout_alignParentEnd="true"
+        android:text="Update"
+        android:textAllCaps="false"
+        tools:ignore="RtlCompat" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcv_firebase"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btnSubmit" />
+</RelativeLayout>

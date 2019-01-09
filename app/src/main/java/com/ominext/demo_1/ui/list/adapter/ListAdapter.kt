@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.ominext.demo_1.R
 import com.ominext.demo_1.model.Post
 
-class ListAdapter(private val context: Context, private val list: MutableList<Post>, fragment: Fragment) : RecyclerView.Adapter<ListAdapter.ItemHolder>() {
+class   ListAdapter(private val context: Context, private val list: MutableList<Post>, fragment: Fragment) : RecyclerView.Adapter<ListAdapter.ItemHolder>() {
 
     private val listener: onItemClickListener
 

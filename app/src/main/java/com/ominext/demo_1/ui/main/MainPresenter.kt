@@ -21,4 +21,12 @@ class MainPresenter @Inject constructor() : BaseContact.Presenter {
         this.view = view
         view.showFragment()
     }
+
+    fun goToListMember(){
+        view.goToListMember()
+    }
+
+    fun goToChat(){
+        view.goToChat()
+    }
 }
