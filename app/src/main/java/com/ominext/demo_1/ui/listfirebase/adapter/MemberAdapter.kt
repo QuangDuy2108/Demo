@@ -11,7 +11,7 @@ import com.ominext.demo_1.model.Member
 
 class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberHolder>() {
 
-    private var listMember: ArrayList<Member>? = arrayListOf()
+    private var listMember: ArrayList<Member> = arrayListOf()
     private lateinit var onItemClick: OnItemClick
 
 
@@ -29,10 +29,10 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberHolder>() {
         return MemberHolder(itemView)
     }
 
-    override fun getItemCount(): Int = listMember!!.size
+    override fun getItemCount(): Int = listMember.size
 
     override fun onBindViewHolder(holder: MemberHolder?, position: Int) {
-        val member = listMember!![position]
+        val member = listMember[position]
 
         holder?.apply {
             str_name.text = member.name

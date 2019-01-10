@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.resigter.ResigterActivity" />
-        <activity android:name=".ui.listfirebase.ListfirebaseActivity"/>
+        <activity android:name=".ui.listfirebase.ListfirebaseActivity" />
+        <activity android:name=".ui.chat.ChatActivity"></activity>
     </application>
 
 </manifest>

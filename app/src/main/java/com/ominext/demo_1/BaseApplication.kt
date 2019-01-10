@@ -6,6 +6,8 @@ import com.google.firebase.FirebaseApp
 import com.ominext.demo_1.di.component.AppComponent
 import com.ominext.demo_1.di.component.DaggerAppComponent
 import com.ominext.demo_1.di.module.AppModule
+import io.realm.Realm
+import io.realm.RealmConfiguration
 
 @SuppressLint("Registered")
 class BaseApplication : Application() {
@@ -15,6 +17,7 @@ class BaseApplication : Application() {
         super.onCreate()
         instance = this
         setup()
+        initRealmConfiguration()
         if (BuildConfig.DEBUG) {
 
         }
@@ -26,9 +29,16 @@ class BaseApplication : Application() {
         component.inject(this)
     }
 
-    private fun initRealm(){
-
+    private fun initRealmConfiguration() {
+        Realm.init(this)
+        val config = RealmConfiguration.Builder()
+            .name("chat.realm")
+            .schemaVersion(1)
+            .deleteRealmIfMigrationNeeded()
+            .build()
+        Realm.setDefaultConfiguration(config)
     }
+
 
     fun getAppComponent(): AppComponent = component
 

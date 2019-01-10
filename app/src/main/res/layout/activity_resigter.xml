@@ -8,6 +8,19 @@
     android:padding="32dp"
     tools:context=".ui.resigter.ResigterActivity">
 
+
+    <EditText
+        android:id="@+id/edtUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/edtEmail"
+        android:ellipsize="end"
+        android:hint="User"
+        android:maxLines="1"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimary" />
+
+
     <EditText
         android:id="@+id/edtEmail"
         android:layout_width="match_parent"

@@ -10,6 +10,7 @@ import com.ominext.demo_1.di.component.DaggerAppComponent
 import com.ominext.demo_1.ui.main.MainActivity
 import com.ominext.demo_1.ui.resigter.ResigterActivity
 import com.ominext.demo_1.util.event.MessageEvent
+import com.ominext.demo_1.util.setUserName
 import kotlinx.android.synthetic.main.activity_login.*
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
@@ -28,7 +29,7 @@ class LoginActivity : AppCompatActivity(), LoginContact.View {
         firebaseAuth = FirebaseAuth.getInstance()
         presenter.attach(this)
 
-        if (firebaseAuth.currentUser != null){
+        if (firebaseAuth.currentUser != null) {
             EventBus.getDefault().postSticky(MessageEvent("Hello everyone"))
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
@@ -54,17 +55,17 @@ class LoginActivity : AppCompatActivity(), LoginContact.View {
         if (edtEmail.text.trim().isEmpty() || edtPassword.text.trim().isEmpty()) {
             Toast.makeText(this, "Null values", Toast.LENGTH_LONG).show()
         } else {
-
             firebaseAuth.signInWithEmailAndPassword(edtEmail.text.toString(), edtPassword.text.toString())
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        EventBus.getDefault().postSticky(MessageEvent("Hello everyone"))
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        Toast.makeText(this, "Login False", Toast.LENGTH_LONG).show()
-                    }
+                .addOnSuccessListener { it ->
+                    EventBus.getDefault().postSticky(MessageEvent("Hello everyone"))
+                    setUserName(this, firebaseAuth.currentUser!!.displayName!!, firebaseAuth.uid!!)
+
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }.addOnFailureListener {
+                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
+
                 }
         }
     }

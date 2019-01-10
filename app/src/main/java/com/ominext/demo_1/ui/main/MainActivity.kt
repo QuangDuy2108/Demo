@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.ominext.demo_1.R
 import com.ominext.demo_1.di.component.DaggerAppComponent
+import com.ominext.demo_1.ui.chat.ChatActivity
 import com.ominext.demo_1.ui.list.ListFragment
 import com.ominext.demo_1.ui.listfirebase.ListfirebaseActivity
 import com.ominext.demo_1.util.event.MessageEvent
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity(), MainContact.View {
     }
 
     override fun goToChat() {
-
+        startActivity(Intent(this@MainActivity, ChatActivity::class.java))
     }
 
     override fun onStart() {

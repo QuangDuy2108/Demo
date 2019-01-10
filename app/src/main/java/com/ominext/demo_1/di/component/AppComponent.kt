@@ -2,6 +2,7 @@ package com.ominext.demo_1.di.component
 
 import com.ominext.demo_1.BaseApplication
 import com.ominext.demo_1.di.module.AppModule
+import com.ominext.demo_1.ui.chat.ChatActivity
 import com.ominext.demo_1.ui.detail.DetailFragment
 import com.ominext.demo_1.ui.list.ListFragment
 import com.ominext.demo_1.ui.listfirebase.ListfirebaseActivity
@@ -18,6 +19,8 @@ interface AppComponent {
     fun inject(mainActivity: MainActivity)
 
     fun inject(loginActivity: LoginActivity)
+
+    fun inject(chatActivity: ChatActivity)
 
     fun inject(resigterActivity: ResigterActivity)
 

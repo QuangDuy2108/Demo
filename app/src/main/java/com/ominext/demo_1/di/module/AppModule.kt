@@ -12,8 +12,21 @@ class AppModule(private val baseApp: BaseApplication) {
 
     @Provides
     @Singleton
-    fun provideApplication(): Application = baseApp
+    internal fun provideApplication(): Application = baseApp
 
     @Provides
-    fun provideApiService(): ApiService = ApiService.create()
+    internal fun provideApiService(): ApiService = ApiService.create()
+
+//    @Provides
+//    internal fun provideRealm(): Realm = Realm.getDefaultInstance()
+//
+//    @Provides
+//    internal fun provideRealmService(realm: Realm): RealmService {
+//        return RealmService(realm)
+//    }
+//
+//    @Provides
+//    internal fun provideChatPresenter(realmService: RealmService): ChatPresenter {
+//        return ChatPresenter(realmService)
+//    }
 }
