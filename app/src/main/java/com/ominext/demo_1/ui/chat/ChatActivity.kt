@@ -18,6 +18,7 @@ import com.ominext.demo_1.util.closeKeyboard
 import com.ominext.demo_1.util.getUserid
 import com.ominext.demo_1.util.getUsername
 import com.ominext.demo_1.util.isNetworkConnected
+import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_chat.*
 import java.util.*
 import javax.inject.Inject
@@ -34,18 +35,24 @@ class ChatActivity : AppCompatActivity(), ChatContact.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
+        Realm.init(applicationContext)
         DaggerAppComponent.builder().build().inject(this)
         firebaseDatabase = FirebaseDatabase.getInstance()
         presenter.attach(this)
         setRcv()
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         if (isNetworkConnected(this@ChatActivity)) {
             Toast.makeText(this@ChatActivity, "Firebase", Toast.LENGTH_LONG).show()
             root.addValueEventListener(valueEvent)
             chat_input.setOnEditorActionListener(onEditorAction)
         } else {
             Toast.makeText(this@ChatActivity, "Realm", Toast.LENGTH_LONG).show()
-//            listChat = presenter.loadChat() as ArrayList<Chat>
+            listChat = Chat.convertFromRealm(presenter.loadChat())
             chatAdapter.setListChat(listChat)
         }
 
@@ -57,12 +64,12 @@ class ChatActivity : AppCompatActivity(), ChatContact.View {
         }
 
         override fun onDataChange(dataSnapshot: DataSnapshot) {
-//            presenter.clearChat()
             listChat.clear()
+            presenter.clearChat()
             for (dataSnap: DataSnapshot in dataSnapshot.children) {
                 val chat = dataSnap.getValue(Chat::class.java)!!
                 listChat.add(chat)
-//                presenter.addChat(chat)
+                presenter.addChat(chat)
             }
             chatAdapter.setListChat(listChat)
             rcv_chat.scrollToPosition(listChat.size - 1)

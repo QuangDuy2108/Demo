@@ -31,12 +31,10 @@ class BaseApplication : Application() {
 
     private fun initRealmConfiguration() {
         Realm.init(this)
-        val config = RealmConfiguration.Builder()
-            .name("chat.realm")
-            .schemaVersion(1)
+        val realmConfiguration = RealmConfiguration.Builder()
             .deleteRealmIfMigrationNeeded()
             .build()
-        Realm.setDefaultConfiguration(config)
+        Realm.setDefaultConfiguration(realmConfiguration)
     }
 
 
