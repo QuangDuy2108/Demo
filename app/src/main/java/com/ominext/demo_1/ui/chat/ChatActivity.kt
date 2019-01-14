@@ -37,7 +37,6 @@ class ChatActivity : AppCompatActivity(), ChatContact.View {
         setContentView(R.layout.activity_chat)
         Realm.init(applicationContext)
         DaggerAppComponent.builder().build().inject(this)
-        firebaseDatabase = FirebaseDatabase.getInstance()
         presenter.attach(this)
         setRcv()
 

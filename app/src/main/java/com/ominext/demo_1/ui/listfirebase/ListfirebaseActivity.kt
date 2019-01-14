@@ -28,7 +28,6 @@ class ListfirebaseActivity : AppCompatActivity(), ListfirebaseContact.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listfirebase)
         DaggerAppComponent.builder().build().inject(this)
-        firebaseDatabase = FirebaseDatabase.getInstance()
         presenter.attach(this)
         setRcv()
 
@@ -60,6 +59,7 @@ class ListfirebaseActivity : AppCompatActivity(), ListfirebaseContact.View {
     }
 
     override fun onUpdate() {
+
     }
     private val valuesEvent = object : ValueEventListener {
         override fun onCancelled(databaseError: DatabaseError) {
